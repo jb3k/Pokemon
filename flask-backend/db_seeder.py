@@ -3,7 +3,7 @@ from app.models.db import db, Pokemon, Item
 import json
 
 with app.app_context():
-    
+
     db.drop_all()
     db.create_all()
 
@@ -1632,7 +1632,8 @@ with app.app_context():
             attack = pokemon["attack"],
             defense = pokemon["defense"],
             type = pokemon["type"],
-            moves = json.dumps(pokemon["moves"]),
+            # moves = json.dumps(pokemon["moves"]),
+            moves = f'{pokemon["moves"]}',
             captured = pokemon.get("captured", False)
 
             # captured = True if "captured" in pokemon.keys() else False

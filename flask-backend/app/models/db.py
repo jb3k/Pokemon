@@ -1,9 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
 import enum
+import json
 from sqlalchemy import Enum
 # from sqlalchemy.sql import func
 from datetime import datetime
-
 
 
 
@@ -27,9 +27,7 @@ types = [
 ]
 
 
-
 db = SQLAlchemy()
-
 
 
 class PokemonType(enum.Enum):
@@ -64,8 +62,8 @@ class Pokemon(db.Model):
     # type = db.Column(db.Enum(PokemonType), nullable=False )
     type = db.Column(db.String(255), nullable=False )
     moves = db.Column(db.String(255), nullable=False)
-    encounter_rate = db.Column(db.Float(3, 2), nullable=False, default=1.00)
-    catch_rate = db.Column(db.Float(3, 2), nullable=False, default=1.00)
+    encounter_rate = db.Column(db.Numeric(3, 2), nullable=False, default=1.00)
+    catch_rate = db.Column(db.Numeric(3, 2), nullable=False, default=1.00)
     captured = db.Column(db.Boolean, nullable=False, default=False)
     # createdAt = db.Column(DateTime(timezone=True), server_default=func.now())
     # updatedAt = db.Column(DateTime(timezone=True), onupdate=func.now())
@@ -73,24 +71,24 @@ class Pokemon(db.Model):
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
     #Relationshipd
     pokemon_items = db.relationship("Item", back_populates = "pokemon_owner", cascade="all,delete")
-    
-    # def to_dict(self):
-    #     return {
-    #         "id": self.id
-    #         "number": self.number
-    #         "attack": self.attack
-    #         "defense": self.defense
-    #         "image_url": self.image_url
-    #         "name":self.name
-    #         "type": self.type
-    #         "moves": self.moves
-    #         "encounter_rate": self.encounter_rate
-    #         "catch_rate": self.catch_rate
-    #         "captured": self.captured
-    #         "created_at": self.created_at
-    #         "updated_at": self.updated_at
-    #         "pokemonItems": [item.to_dict_no_pokemon() for item in self.pokemon_items]
-    #     }
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "number": self.number,
+            "attack": self.attack,
+            "defense": self.defense,
+            "image_url": self.image_url,
+            "name":self.name,
+            "type": self.type,
+            "moves": self.moves,
+            "encounter_rate": float(self.encounter_rate),
+            "catch_rate": float(self.catch_rate),
+            "captured": self.captured,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+            # "pokemonItems": [item.to_dict_no_pokemon() for item in self.pokemon_items]
+        }
 
     # def to_dict_no_pokemonItems(self):
     #     return {
@@ -148,8 +146,3 @@ class Item(db.Model):
     #         "created_at": self.created_at,
     #         "updated_at": self.updated_at
     #     }
-
-
-
-
-    

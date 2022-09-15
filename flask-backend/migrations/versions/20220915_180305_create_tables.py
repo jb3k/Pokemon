@@ -1,8 +1,8 @@
-"""empty message
+"""create tables
 
-Revision ID: 0f8035bee560
+Revision ID: df54ed48f10f
 Revises: 
-Create Date: 2022-09-15 14:34:06.447091
+Create Date: 2022-09-15 18:03:05.592680
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0f8035bee560'
+revision = 'df54ed48f10f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,8 +27,8 @@ def upgrade():
     sa.Column('name', sa.String(length=255), nullable=False),
     sa.Column('type', sa.String(length=255), nullable=False),
     sa.Column('moves', sa.String(length=255), nullable=False),
-    sa.Column('encounter_rate', sa.Float(precision=3, asdecimal=2), nullable=False),
-    sa.Column('catch_rate', sa.Float(precision=3, asdecimal=2), nullable=False),
+    sa.Column('encounter_rate', sa.Numeric(precision=3, scale=2), nullable=False),
+    sa.Column('catch_rate', sa.Numeric(precision=3, scale=2), nullable=False),
     sa.Column('captured', sa.Boolean(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
